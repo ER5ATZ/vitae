@@ -1,12 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import useResultData from './hooks/useResultData';
+import useThemeContext from './hooks/useThemeContext';
 import NotFound from './NotFound';
 import Result from './Result';
 import Start from './Start';
-import useResultData from './hooks/useResultData';
+import './App.css';
 
 const App: React.FC = () => {
   const { resultData, loading, error } = useResultData();
+  const { isDarkTheme, toggleTheme } = useThemeContext();
 
   if (loading) {
     return <p>Loading...</p>;
@@ -18,12 +21,18 @@ const App: React.FC = () => {
 
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Start />} />
-        <Route path="/search/:query" element={<Result results={resultData} />} />
-        <Route path="/search" element={<Result results={resultData} />} />
-        <Route path="/*" element={<NotFound />} />
-      </Routes>
+      <div className={`app app${isDarkTheme ? '-dark' : '-light'}`}>
+        <div id="header">
+          <span onClick={toggleTheme}>Switch Theme</span>
+          <span onClick={toggleTheme}>Contact Form</span>
+        </div>
+        <Routes>
+          <Route path="/" element={<Start />} />
+          <Route path="/search/:query" element={<Result results={resultData} />} />
+          <Route path="/search" element={<Result results={resultData} />} />
+          <Route path="/*" element={<NotFound />} />
+        </Routes>
+      </div>
     </Router>
   );
 };

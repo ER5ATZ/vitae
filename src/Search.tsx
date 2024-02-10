@@ -10,14 +10,17 @@ function Search() {
   };
 
   return (
-    <div>
-      <input
+    <div id="search-bar">
+     <form action="" id="search-form">
+       <input
+        id="search-input"
         type="text"
-        placeholder="Enter your search"
+        placeholder="Enter your search..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <button onClick={handleSearch}>Search</button>
+       />
+       <button id="search-btn" onClick={handleSearch}>GO</button>
+      </form>
     </div>
   );
 }
